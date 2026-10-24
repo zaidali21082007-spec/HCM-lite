@@ -1,0 +1,14 @@
+{
+  "name": "hcm-lite",
+  "version": "1.0.0",
+  "description": "HCM Lite - Modern HR Management System with AI Assistant",
+  "private": true,
+  "scripts": {
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "test": "npm --prefix backend test",
+    "build": "npm --prefix frontend run build",
+    "prisma:generate": "npm --prefix backend run prisma:generate",
+    "prisma:push": "npm --prefix backend run prisma:push"
+  }
+}

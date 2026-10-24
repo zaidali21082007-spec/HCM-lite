@@ -1,0 +1,262 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model CompanySetting {
+  id                 String   @id @default(uuid())
+  companyName        String
+  officeStartTime    String   @default("09:00")
+  officeEndTime      String   @default("18:00")
+  graceMinutes       Int      @default(15)
+  halfDayHours       Float    @default(5.0)
+  weekendDays        String   @default("Saturday,Sunday")
+  officeLatitude     Float?
+  officeLongitude    Float?
+  officeRadiusMeters Float?
+  setupCompleted     Boolean  @default(false)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model User {
+  id                  String    @id @default(uuid())
+  email               String    @unique
+  passwordHash        String
+  role                String    // ADMIN, HR, EMPLOYEE
+  isTemporaryPassword Boolean   @default(false)
+  isActive            Boolean   @default(true)
+  employee            Employee?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+}
+
+model Department {
+  id          String     @id @default(uuid())
+  name        String     @unique
+  code        String     @unique
+  description String?
+  employees   Employee[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Designation {
+  id          String     @id @default(uuid())
+  title       String     @unique
+  description String?
+  employees   Employee[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Employee {
+  id                    String                 @id @default(uuid())
+  employeeCode          String                 @unique
+  userId                String                 @unique
+  user                  User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  firstName             String
+  lastName              String
+  email                 String                 @unique
+  phone                 String?
+  address               String?
+  dateOfBirth           DateTime?
+  joiningDate           DateTime
+  exitDate              DateTime?
+  status                String                 @default("ACTIVE") // ACTIVE, INACTIVE, ON_LEAVE, TERMINATED
+  departmentId          String
+  department            Department             @relation(fields: [departmentId], references: [id])
+  designationId         String
+  designation           Designation            @relation(fields: [designationId], references: [id])
+  basicSalary           Float                  @default(0.0)
+  allowances            Float                  @default(0.0)
+  deductions            Float                  @default(0.0)
+  attendances           Attendance[]
+  attendanceCorrections AttendanceCorrection[]
+  leaveRequests         LeaveRequest[]
+  payrollItems          PayrollItem[]
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+}
+
+model LeaveType {
+  id            String         @id @default(uuid())
+  name          String         @unique
+  code          String         @unique // ANNUAL, SICK, CASUAL, UNPAID
+  annualQuota   Int            @default(14)
+  isUnpaid      Boolean        @default(false)
+  description   String?
+  leaveRequests LeaveRequest[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Holiday {
+  id          String   @id @default(uuid())
+  name        String
+  date        DateTime @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Attendance {
+  id              String    @id @default(uuid())
+  employeeId      String
+  employee        Employee  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  date            DateTime
+  checkIn         DateTime
+  checkInAt       DateTime?
+  checkOut        DateTime?
+  source          String?   @default("web")
+  latitude        Float?
+  longitude       Float?
+  accuracy        Float?
+  distanceMeters  Float?
+  checkInLat      Float?
+  checkInLng      Float?
+  checkOutLat     Float?
+  checkOutLng     Float?
+  status          String    // PRESENT, LATE, HALF_DAY, MISSING_CHECKOUT, ABSENT
+  workHours       Float?
+  isGeofenceValid Boolean   @default(true)
+  remarks         String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@unique([employeeId, date])
+}
+
+model AttendanceCorrection {
+  id                String    @id @default(uuid())
+  employeeId        String
+  employee          Employee  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  attendanceDate    DateTime
+  requestedCheckIn  DateTime
+  requestedCheckOut DateTime
+  reason            String
+  status            String    @default("PENDING") // PENDING, APPROVED, REJECTED
+  reviewerId        String?
+  reviewerComment   String?
+  reviewedAt        DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+}
+
+model LeaveRequest {
+  id               String    @id @default(uuid())
+  employeeId       String
+  employee         Employee  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  leaveTypeId      String
+  leaveType        LeaveType @relation(fields: [leaveTypeId], references: [id])
+  startDate        DateTime
+  endDate          DateTime
+  workingDaysCount Float
+  reason           String
+  status           String    @default("PENDING") // PENDING, APPROVED, REJECTED, CANCELLED
+  reviewerId       String?
+  reviewerComment  String?
+  reviewedAt       DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+model PayrollRun {
+  id                 String        @id @default(uuid())
+  month              Int           // 1 - 12
+  year               Int           // e.g. 2026
+  workingDaysInMonth Int
+  status             String        @default("DRAFT") // DRAFT, FINALIZED
+  finalizedByUserId  String?
+  finalizedAt        DateTime?
+  totalGross         Float         @default(0.0)
+  totalDeductions    Float         @default(0.0)
+  totalNet           Float         @default(0.0)
+  items              PayrollItem[]
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  @@unique([year, month])
+}
+
+model PayrollItem {
+  id                    String     @id @default(uuid())
+  payrollRunId          String
+  payrollRun            PayrollRun @relation(fields: [payrollRunId], references: [id], onDelete: Cascade)
+  employeeId            String
+  employee              Employee   @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  basicSalary           Float
+  hraAllowance          Float      // 40% of basic
+  medicalAllowance      Float      // 10% of basic
+  grossSalary           Float      // 1.5 x basic
+  perDaySalary          Float      // grossSalary / workingDaysInMonth
+  workedDays            Float      @default(0.0)
+  absentDays            Float      @default(0.0)
+  halfDays              Float      @default(0.0)
+  unpaidLeaveDays       Float      @default(0.0)
+  absenteeismDeduction  Float      @default(0.0)
+  incomeTaxDeduction    Float      @default(0.0)
+  otherDeductions       Float      @default(0.0)
+  totalDeductions       Float      @default(0.0)
+  netSalary             Float      @default(0.0)
+  isProrated            Boolean    @default(false)
+  prorationReason       String?
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  @@unique([payrollRunId, employeeId])
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  actorId    String
+  actorEmail String
+  actorRole  String
+  action     String   // CREATE, UPDATE, APPROVE, REJECT, FINALIZE, DELETE, IMPORT
+  entity     String   // EMPLOYEE, ATTENDANCE, LEAVE, PAYROLL, SETTINGS, etc.
+  entityId   String?
+  beforeJson String?
+  afterJson  String?
+  ipAddress  String?
+  userAgent  String?
+  timestamp  DateTime @default(now())
+}
+
+model Announcement {
+  id         String   @id @default(uuid())
+  title      String
+  content    String
+  priority   String   @default("MEDIUM") // LOW, MEDIUM, HIGH, URGENT
+  authorId   String
+  authorName String
+  authorRole String
+  createdAt  DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  title     String
+  message   String
+  type      String   // LEAVE, ATTENDANCE, PAYROLL, SYSTEM
+  isRead    Boolean  @default(false)
+  link      String?
+  createdAt DateTime @default(now())
+}
+
+model AiLog {
+  id         String   @id @default(uuid())
+  userId     String
+  userEmail  String
+  userRole   String
+  prompt     String
+  toolCalled String?
+  toolResult String?
+  response   String
+  timestamp  DateTime @default(now())
+}
+
