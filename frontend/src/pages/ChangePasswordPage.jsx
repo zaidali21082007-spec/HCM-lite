@@ -63,8 +63,8 @@ export default function ChangePasswordPage() {
             style={{
               width: 48,
               height: 48,
-              borderRadius: 14,
-              background: 'linear-gradient(135deg, #F59E0B, #D97706)',
+              borderRadius: 10,
+              background: 'linear-gradient(135deg, var(--primary), var(--primary-hover))',
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',

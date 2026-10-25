@@ -155,7 +155,7 @@ export default function AuditLogsPage() {
                         style={{
                           background:
                             log.action === 'FINALIZE'
-                              ? 'rgba(168,85,247,0.15)'
+                              ? 'var(--primary-light)'
                               : log.action === 'APPROVE'
                               ? 'var(--success-light)'
                               : log.action === 'CREATE'
@@ -163,7 +163,7 @@ export default function AuditLogsPage() {
                               : 'var(--bg-elevated)',
                           color:
                             log.action === 'FINALIZE'
-                              ? '#C084FC'
+                              ? 'var(--primary)'
                               : log.action === 'APPROVE'
                               ? 'var(--success)'
                               : log.action === 'CREATE'

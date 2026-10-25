@@ -207,7 +207,6 @@ export default function PayrollPage() {
                   <button
                     onClick={() => handleFinalizeRun(selectedRun.id)}
                     className="btn btn-primary"
-                    style={{ background: 'linear-gradient(135deg, #10B981, #059669)' }}
                   >
                     <Lock size={16} /> Finalize & Lock Payroll
                   </button>

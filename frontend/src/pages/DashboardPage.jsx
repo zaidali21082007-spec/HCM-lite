@@ -133,21 +133,21 @@ export default function DashboardPage({ onOpenCheckInModal, onOpenAiModal }) {
             value={metrics.stats.daysPresent}
             subtitle={`${metrics.stats.daysLate} late arrivals`}
             icon={CalendarCheck}
-            color="#10B981"
+            color="var(--success)"
           />
           <StatCard
             title="Half-Day Records"
             value={metrics.stats.halfDays}
             subtitle="Shifts under 5.0 hours"
             icon={Clock}
-            color="#06B6D4"
+            color="var(--accent)"
           />
           <StatCard
             title="Total Tracked Days"
             value={metrics.stats.totalTracked}
             subtitle={`Month ${metrics.month}/${metrics.year}`}
             icon={Calendar}
-            color="#6366F1"
+            color="var(--primary)"
           />
         </div>
 
@@ -289,9 +289,9 @@ export default function DashboardPage({ onOpenCheckInModal, onOpenAiModal }) {
               disabled={aiSummaryLoading}
               className="btn btn-secondary btn-sm"
               style={{
-                background: 'linear-gradient(135deg, rgba(168,85,247,0.15), rgba(99,102,241,0.15))',
-                borderColor: 'rgba(168,85,247,0.4)',
-                color: '#C084FC',
+                background: 'var(--primary-light)',
+                borderColor: 'var(--border-color)',
+                color: 'var(--primary)',
                 fontWeight: 700,
               }}
             >
@@ -312,18 +312,18 @@ export default function DashboardPage({ onOpenCheckInModal, onOpenAiModal }) {
           style={{
             padding: '16px 20px',
             marginBottom: 24,
-            background: 'linear-gradient(135deg, rgba(99,102,241,0.08), rgba(168,85,247,0.08))',
-            border: '1px solid rgba(168,85,247,0.3)',
-            borderRadius: 14,
+            background: 'var(--bg-elevated)',
+            border: '1px solid var(--border-color)',
+            borderRadius: 12,
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <span
                 style={{
-                  background: 'rgba(168,85,247,0.2)',
-                  color: '#C084FC',
-                  border: '1px solid rgba(168,85,247,0.4)',
+                  background: 'var(--primary-light)',
+                  color: 'var(--primary)',
+                  border: '1px solid var(--border-color)',
                   fontSize: '0.65rem',
                   fontWeight: 700,
                   textTransform: 'uppercase',
@@ -375,28 +375,28 @@ export default function DashboardPage({ onOpenCheckInModal, onOpenAiModal }) {
           value={metrics?.headcount?.active || 0}
           subtitle={`Attrition rate: ${metrics?.headcount?.attritionRate || 0}%`}
           icon={Users}
-          color="#6366F1"
+          color="var(--primary)"
         />
         <StatCard
           title="Attendance Rate"
           value={`${metrics?.attendance?.rate || 0}%`}
           subtitle="Effective present / active records"
           icon={CalendarCheck}
-          color="#10B981"
+          color="var(--success)"
         />
         <StatCard
           title="Late Arrival Rate"
           value={`${metrics?.attendance?.latePercentage || 0}%`}
           subtitle="Late check-ins / (present + late)"
           icon={Clock}
-          color="#F59E0B"
+          color="var(--warning)"
         />
         <StatCard
           title="Absenteeism Rate"
           value={`${metrics?.attendance?.absenteeismRate || 0}%`}
           subtitle="Absent days / expected working days"
           icon={AlertCircle}
-          color="#EF4444"
+          color="var(--danger)"
         />
       </div>
 
@@ -412,15 +412,15 @@ export default function DashboardPage({ onOpenCheckInModal, onOpenAiModal }) {
               <AreaChart data={metrics?.attendance?.attendanceTrend || []}>
                 <defs>
                   <linearGradient id="colorPresent" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#10B981" stopOpacity={0} />
+                    <stop offset="5%" stopColor="var(--success)" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="var(--success)" stopOpacity={0} />
                   </linearGradient>
                   <linearGradient id="colorLate" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#F59E0B" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#F59E0B" stopOpacity={0} />
+                    <stop offset="5%" stopColor="var(--warning)" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="var(--warning)" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
                 <XAxis dataKey="date" stroke="var(--text-muted)" fontSize={11} />
                 <YAxis stroke="var(--text-muted)" fontSize={11} />
                 <Tooltip
@@ -431,8 +431,8 @@ export default function DashboardPage({ onOpenCheckInModal, onOpenAiModal }) {
                     fontSize: 12,
                   }}
                 />
-                <Area type="monotone" dataKey="present" stroke="#10B981" fillOpacity={1} fill="url(#colorPresent)" name="Present" />
-                <Area type="monotone" dataKey="late" stroke="#F59E0B" fillOpacity={1} fill="url(#colorLate)" name="Late" />
+                <Area type="monotone" dataKey="present" stroke="var(--success)" fillOpacity={1} fill="url(#colorPresent)" name="Present" />
+                <Area type="monotone" dataKey="late" stroke="var(--warning)" fillOpacity={1} fill="url(#colorLate)" name="Late" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -446,7 +446,7 @@ export default function DashboardPage({ onOpenCheckInModal, onOpenAiModal }) {
           <div style={{ height: 260, width: '100%' }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={metrics?.payroll?.trends || []}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
                 <XAxis dataKey="period" stroke="var(--text-muted)" fontSize={11} />
                 <YAxis stroke="var(--text-muted)" fontSize={11} />
                 <Tooltip
@@ -458,8 +458,8 @@ export default function DashboardPage({ onOpenCheckInModal, onOpenAiModal }) {
                   }}
                 />
                 <Legend />
-                <Bar dataKey="totalCost" fill="#6366F1" radius={[4, 4, 0, 0]} name="Total Gross ($)" />
-                <Bar dataKey="avgSalary" fill="#06B6D4" radius={[4, 4, 0, 0]} name="Avg Salary ($)" />
+                <Bar dataKey="totalCost" fill="var(--primary)" radius={[4, 4, 0, 0]} name="Total Gross ($)" />
+                <Bar dataKey="avgSalary" fill="var(--accent)" radius={[4, 4, 0, 0]} name="Avg Salary ($)" />
               </BarChart>
             </ResponsiveContainer>
           </div>

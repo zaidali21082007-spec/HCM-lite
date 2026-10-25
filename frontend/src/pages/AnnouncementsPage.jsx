@@ -91,7 +91,7 @@ export default function AnnouncementsPage() {
                 className="glass-panel"
                 style={{
                   padding: 22,
-                  borderLeft: isUrgent ? '4px solid #EF4444' : '4px solid var(--primary)',
+                  borderLeft: isUrgent ? '4px solid var(--danger)' : '4px solid var(--primary)',
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 10 }}>

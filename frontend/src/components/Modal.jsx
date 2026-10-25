@@ -29,7 +29,7 @@ export default function Modal({ isOpen, onClose, title, children, maxWidth = 550
           flexDirection: 'column',
           background: 'var(--bg-secondary)',
           border: '1px solid var(--border-color)',
-          borderRadius: 16,
+          borderRadius: 12,
           boxShadow: 'var(--shadow-lg)',
           overflow: 'hidden',
         }}

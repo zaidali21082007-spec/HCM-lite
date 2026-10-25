@@ -75,7 +75,7 @@ export default function SetupPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'radial-gradient(ellipse at top, #1E1B4B 0%, #0B0F19 100%)',
+        background: 'var(--bg-primary)',
         padding: 20,
       }}
     >
@@ -85,10 +85,10 @@ export default function SetupPage() {
           width: '100%',
           maxWidth: 640,
           padding: 36,
-          borderRadius: 24,
+          borderRadius: 12,
           background: 'var(--bg-secondary)',
-          border: '1px solid rgba(99, 102, 241, 0.3)',
-          boxShadow: '0 25px 60px rgba(0,0,0,0.6)',
+          border: '1px solid var(--border-color)',
+          boxShadow: 'var(--shadow-lg)',
         }}
       >
         {/* Step Header */}
@@ -97,14 +97,13 @@ export default function SetupPage() {
             style={{
               width: 52,
               height: 52,
-              borderRadius: 16,
-              background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+              borderRadius: 10,
+              background: 'linear-gradient(135deg, var(--primary), var(--primary-hover))',
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
               color: '#FFFFFF',
               marginBottom: 12,
-              boxShadow: '0 4px 20px rgba(99, 102, 241, 0.5)',
             }}
           >
             <Building2 size={26} />

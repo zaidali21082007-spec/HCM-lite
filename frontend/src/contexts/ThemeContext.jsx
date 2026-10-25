@@ -4,12 +4,12 @@ const ThemeContext = createContext(null);
 
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('hcm_theme') || 'dark';
+    return localStorage.getItem('hcm-theme') || localStorage.getItem('hcm_theme') || 'dark';
   });
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('hcm_theme', theme);
+    localStorage.setItem('hcm-theme', theme);
   }, [theme]);
 
   const toggleTheme = () => {

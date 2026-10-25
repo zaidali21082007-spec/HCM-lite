@@ -93,14 +93,13 @@ export default function ProfilePage() {
               width: 64,
               height: 64,
               borderRadius: '50%',
-              background: 'linear-gradient(135deg, #6366F1, #06B6D4)',
+              background: 'linear-gradient(135deg, var(--primary), var(--primary-hover))',
               color: '#FFFFFF',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               fontSize: '1.5rem',
               fontWeight: 800,
-              boxShadow: '0 4px 15px rgba(99, 102, 241, 0.4)',
             }}
           >
             {employee.firstName[0]}

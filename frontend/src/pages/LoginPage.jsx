@@ -36,7 +36,7 @@ export default function LoginPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'radial-gradient(ellipse at top, #1E1B4B 0%, #0B0F19 100%)',
+        background: 'var(--bg-primary)',
         padding: 20,
       }}
     >
@@ -46,10 +46,10 @@ export default function LoginPage() {
           width: '100%',
           maxWidth: 440,
           padding: 36,
-          borderRadius: 24,
+          borderRadius: 12,
           background: 'var(--bg-secondary)',
-          border: '1px solid rgba(255, 255, 255, 0.08)',
-          boxShadow: '0 25px 60px rgba(0,0,0,0.6)',
+          border: '1px solid var(--border-color)',
+          boxShadow: 'var(--shadow-lg)',
         }}
       >
         <div style={{ textAlign: 'center', marginBottom: 28 }}>
@@ -57,8 +57,8 @@ export default function LoginPage() {
             style={{
               width: 52,
               height: 52,
-              borderRadius: 16,
-              background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+              borderRadius: 10,
+              background: 'linear-gradient(135deg, var(--primary), var(--primary-hover))',
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -66,7 +66,6 @@ export default function LoginPage() {
               fontWeight: 800,
               fontSize: '1.4rem',
               marginBottom: 12,
-              boxShadow: '0 4px 20px rgba(99, 102, 241, 0.5)',
             }}
           >
             H
@@ -133,7 +132,7 @@ export default function LoginPage() {
             <Shield size={12} color="var(--primary)" /> Server Enforced RBAC
           </span>
           <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-            <Sparkles size={12} color="#A855F7" /> Integrated AI
+            <Sparkles size={12} color="var(--primary)" /> Integrated AI
           </span>
         </div>
       </div>

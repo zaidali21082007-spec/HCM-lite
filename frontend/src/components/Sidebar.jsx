@@ -105,13 +105,13 @@ export default function Sidebar({ currentPath, onNavigate, isOpen, onOpenAiModal
                   borderRadius: 10,
                   fontSize: '0.875rem',
                   fontWeight: isActive ? 700 : 500,
-                  background: isActive ? 'var(--primary-light)' : 'transparent',
-                  color: isActive ? 'var(--primary)' : 'var(--text-secondary)',
+                  background: isActive ? 'var(--primary)' : 'transparent',
+                  color: isActive ? '#FFFFFF' : 'var(--text-secondary)',
                   border: 'none',
                   cursor: 'pointer',
                   textAlign: 'left',
                   transition: 'all 0.15s ease',
-                  borderLeft: isActive ? '3px solid var(--primary)' : '3px solid transparent',
+                  borderLeft: isActive ? '3px solid var(--accent)' : '3px solid transparent',
                 }}
                 onMouseEnter={(e) => {
                   if (!isActive) {
@@ -138,20 +138,20 @@ export default function Sidebar({ currentPath, onNavigate, isOpen, onOpenAiModal
           onClick={onOpenAiModal}
           style={{
             padding: 14,
-            borderRadius: 14,
-            background: 'linear-gradient(135deg, rgba(99,102,241,0.12), rgba(168,85,247,0.12))',
-            border: '1px solid rgba(168,85,247,0.25)',
+            borderRadius: 12,
+            background: 'var(--bg-elevated)',
+            border: '1px solid var(--border-color)',
             cursor: 'pointer',
             marginTop: 16,
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-            <Sparkles size={16} color="#A855F7" />
-            <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#C084FC' }}>
+            <Sparkles size={16} color="var(--primary)" />
+            <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-primary)' }}>
               HCM Lite AI
             </span>
           </div>
-          <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', lineHeight: 1.4, margin: 0 }}>
+          <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', lineHeight: 1.4, margin: 0 }}>
             Instant policy Q&A, leave balances, and live company statistics.
           </p>
         </div>

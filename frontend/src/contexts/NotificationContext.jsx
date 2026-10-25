@@ -84,10 +84,10 @@ export function NotificationProvider({ children }) {
             className="animate-fade-in"
             style={{
               padding: '12px 18px',
-              borderRadius: 12,
-              background: toast.type === 'error' ? '#EF4444' : toast.type === 'success' ? '#10B981' : '#4F46E5',
+              borderRadius: 10,
+              background: toast.type === 'error' ? 'var(--danger)' : toast.type === 'success' ? 'var(--success)' : 'var(--primary)',
               color: '#FFFFFF',
-              boxShadow: '0 10px 25px rgba(0,0,0,0.3)',
+              boxShadow: 'var(--shadow-lg)',
               fontSize: '0.875rem',
               fontWeight: 500,
               display: 'flex',

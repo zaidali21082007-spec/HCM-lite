@@ -178,9 +178,9 @@ export default function LeavesPage() {
               onClick={() => setShowSmartModal(true)}
               className="btn btn-secondary btn-sm"
               style={{
-                background: 'linear-gradient(135deg, rgba(168,85,247,0.15), rgba(99,102,241,0.15))',
-                borderColor: 'rgba(168,85,247,0.4)',
-                color: '#C084FC',
+                background: 'var(--primary-light)',
+                borderColor: 'var(--border-color)',
+                color: 'var(--primary)',
                 fontWeight: 700,
               }}
             >
@@ -347,7 +347,7 @@ export default function LeavesPage() {
                 borderRadius: 6,
                 fontFamily: 'var(--font-mono)',
                 fontSize: '0.8rem',
-                color: '#C084FC',
+                color: 'var(--text-primary)',
               }}
             >
               "Need next Monday and Tuesday off for a family wedding"
@@ -369,10 +369,10 @@ export default function LeavesPage() {
             style={{
               padding: 10,
               borderRadius: 8,
-              background: 'rgba(168,85,247,0.1)',
-              border: '1px solid rgba(168,85,247,0.25)',
+              background: 'var(--primary-light)',
+              border: '1px solid var(--border-color)',
               fontSize: '0.75rem',
-              color: '#C084FC',
+              color: 'var(--text-secondary)',
               lineHeight: 1.4,
             }}
           >
@@ -384,7 +384,6 @@ export default function LeavesPage() {
             disabled={smartLoading}
             className="btn btn-primary"
             style={{
-              background: 'linear-gradient(135deg, #6366F1, #A855F7)',
               padding: 12,
               fontWeight: 700,
             }}

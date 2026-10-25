@@ -65,14 +65,13 @@ export default function Navbar({ onToggleSidebar, onOpenAiModal }) {
               width: 32,
               height: 32,
               borderRadius: 8,
-              background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+              background: 'linear-gradient(135deg, var(--primary), var(--primary-hover))',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               color: '#FFFFFF',
               fontWeight: 800,
               fontSize: '1rem',
-              boxShadow: '0 2px 10px rgba(99, 102, 241, 0.4)',
             }}
           >
             H
@@ -109,9 +108,9 @@ export default function Navbar({ onToggleSidebar, onOpenAiModal }) {
           onClick={onOpenAiModal}
           className="btn"
           style={{
-            background: 'linear-gradient(135deg, rgba(99,102,241,0.2), rgba(168,85,247,0.2))',
-            color: '#A855F7',
-            border: '1px solid rgba(168,85,247,0.3)',
+            background: 'var(--primary-light)',
+            color: 'var(--primary)',
+            border: '1px solid var(--border-color)',
             padding: '6px 14px',
             borderRadius: 20,
             fontSize: '0.825rem',
@@ -152,7 +151,7 @@ export default function Navbar({ onToggleSidebar, onOpenAiModal }) {
                   width: 16,
                   height: 16,
                   borderRadius: '50%',
-                  background: '#EF4444',
+                  background: 'var(--danger)',
                   color: '#FFFFFF',
                   fontSize: '0.65rem',
                   fontWeight: 800,
@@ -242,7 +241,7 @@ export default function Navbar({ onToggleSidebar, onOpenAiModal }) {
                 width: 34,
                 height: 34,
                 borderRadius: '50%',
-                background: 'linear-gradient(135deg, #4F46E5, #06B6D4)',
+                background: 'linear-gradient(135deg, var(--primary), var(--primary-hover))',
                 color: '#FFFFFF',
                 display: 'flex',
                 alignItems: 'center',

@@ -99,9 +99,9 @@ export default function AiAssistantModal({ isOpen, onClose }) {
           display: 'flex',
           flexDirection: 'column',
           background: 'var(--bg-secondary)',
-          border: '1px solid rgba(168,85,247,0.3)',
-          borderRadius: 20,
-          boxShadow: '0 20px 50px rgba(0,0,0,0.5)',
+          border: '1px solid var(--border-color)',
+          borderRadius: 12,
+          boxShadow: 'var(--shadow-lg)',
           overflow: 'hidden',
         }}
         onClick={(e) => e.stopPropagation()}
@@ -114,7 +114,7 @@ export default function AiAssistantModal({ isOpen, onClose }) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            background: 'linear-gradient(90deg, rgba(99,102,241,0.1), rgba(168,85,247,0.1))',
+            background: 'var(--bg-elevated)',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -122,8 +122,8 @@ export default function AiAssistantModal({ isOpen, onClose }) {
               style={{
                 width: 32,
                 height: 32,
-                borderRadius: 10,
-                background: 'linear-gradient(135deg, #6366F1, #A855F7)',
+                borderRadius: 8,
+                background: 'linear-gradient(135deg, var(--primary), var(--primary-hover))',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -135,7 +135,7 @@ export default function AiAssistantModal({ isOpen, onClose }) {
             <div>
               <div style={{ fontSize: '0.95rem', fontWeight: 800 }}>HCM Lite AI Assistant</div>
               <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
-                Role context: <span style={{ color: '#A855F7', fontWeight: 700 }}>{user?.role}</span> (Service-layer Tool Calling)
+                Role context: <span style={{ color: 'var(--primary)', fontWeight: 700 }}>{user?.role}</span> (Service-layer Tool Calling)
               </div>
             </div>
           </div>
@@ -177,8 +177,8 @@ export default function AiAssistantModal({ isOpen, onClose }) {
                       width: 28,
                       height: 28,
                       borderRadius: 8,
-                      background: 'rgba(168,85,247,0.2)',
-                      color: '#A855F7',
+                      background: 'var(--primary-light)',
+                      color: 'var(--primary)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -194,9 +194,9 @@ export default function AiAssistantModal({ isOpen, onClose }) {
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
                       <span
                         style={{
-                          background: 'rgba(168,85,247,0.18)',
-                          color: '#C084FC',
-                          border: '1px solid rgba(168,85,247,0.35)',
+                          background: 'var(--primary-light)',
+                          color: 'var(--primary)',
+                          border: '1px solid var(--border-color)',
                           fontSize: '0.65rem',
                           fontWeight: 700,
                           textTransform: 'uppercase',
@@ -214,9 +214,9 @@ export default function AiAssistantModal({ isOpen, onClose }) {
                       {msg.toolUsed && (
                         <span
                           style={{
-                            background: 'rgba(6,182,212,0.12)',
-                            color: '#06B6D4',
-                            border: '1px solid rgba(6,182,212,0.25)',
+                            background: 'var(--bg-elevated)',
+                            color: 'var(--text-secondary)',
+                            border: '1px solid var(--border-color)',
                             padding: '2px 6px',
                             borderRadius: 4,
                             fontSize: '0.65rem',
@@ -233,14 +233,14 @@ export default function AiAssistantModal({ isOpen, onClose }) {
                   <div
                     style={{
                       padding: '12px 16px',
-                      borderRadius: isUser ? '16px 16px 4px 16px' : '16px 16px 16px 4px',
+                      borderRadius: isUser ? '12px 12px 4px 12px' : '12px 12px 12px 4px',
                       background: isUser
-                        ? 'linear-gradient(135deg, #6366F1, #818CF8)'
+                        ? 'linear-gradient(135deg, var(--primary), var(--primary-hover))'
                         : 'var(--bg-elevated)',
                       color: isUser ? '#FFFFFF' : 'var(--text-primary)',
                       fontSize: '0.875rem',
                       lineHeight: 1.6,
-                      boxShadow: 'var(--shadow-sm)',
+                      border: '1px solid var(--border-color)',
                       whiteSpace: 'pre-wrap',
                     }}
                   >
@@ -270,7 +270,7 @@ export default function AiAssistantModal({ isOpen, onClose }) {
           })}
 
           {loading && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: '#A855F7' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: 'var(--primary)' }}>
               <Loader2 size={18} className="animate-spin" />
               <span style={{ fontSize: '0.825rem', fontStyle: 'italic' }}>
                 Executing service tool & generating response...

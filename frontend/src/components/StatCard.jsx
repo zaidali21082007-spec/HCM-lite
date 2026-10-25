@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function StatCard({ title, value, subtitle, icon: Icon, color = '#6366F1', trend = null }) {
+export default function StatCard({ title, value, subtitle, icon: Icon, color = 'var(--primary)', trend = null }) {
   return (
     <div
       className="glass-panel"
@@ -23,7 +23,7 @@ export default function StatCard({ title, value, subtitle, icon: Icon, color = '
               width: 38,
               height: 38,
               borderRadius: 10,
-              background: `${color}20`,
+              background: `color-mix(in srgb, ${color} 14%, transparent)`,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
