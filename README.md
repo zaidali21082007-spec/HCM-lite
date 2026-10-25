@@ -1,151 +1,91 @@
-# HCM Lite — Web-Based HR Management System with AI Assistant
+# HCM Lite
 
-**HCM Lite** is a web-based HR Management System with role-based access control (Admin, HR, Employee), face-recognition and GPS geofence attendance check-in, leave management with working-day calculation, progressive tax payroll calculation with PDF payslips, audit logging, and an integrated AI assistant.
+HCM Lite is a web-based Human Capital Management system for Admin, HR, and Employee roles. It includes attendance with face and GPS check-in, leave approval, monthly payroll with payslip PDFs, dashboards, and an AI assistant.
 
----
+## Links
 
-## 🛠️ Technology Stack
+- Repository: https://github.com/zaidali21082007-spec/HCM-lite
+- Live app: https://hcm-lite-eight.vercel.app/
 
-- **Backend**: Node.js + Express
-- **Authentication**: JWT authentication, bcryptjs password hashing, role-based middleware
-- **Validation**: Zod schema validation on API request payloads
-- **Database**: Prisma ORM with SQLite (zero-config local default `dev.db`) or PostgreSQL
-- **Frontend**: React 18, Vite, Vanilla CSS design system, Lucide icons, Recharts
-- **Face Recognition**: `@vladmandic/face-api` (TinyFaceDetector loaded from `/models`)
-- **Geofencing**: `geolib` (`isPointWithinRadius`, `getDistance`) with GPS geolocation
-- **PDF Generation**: `pdfkit` for server-side generated employee payslips
-- **AI Assistant**: Hosted LLM tool-calling (Google Gemini / OpenAI) with deterministic service-layer fallback
+## Stack
 
----
+- Backend: Node.js, Express, Prisma, SQLite (development), JWT, bcryptjs, Zod, pdfkit, geolib
+- Frontend: React, Vite, Recharts, @vladmandic/face-api (SSD MobileNet v1 and TinyFaceDetector)
+- AI: any hosted LLM with tool calling, configured with an API key
 
-## ⚡ Run in Under 10 Minutes
+## Project structure
 
-### 1. Clone & Install Dependencies
+- backend/ : API, business rules, Prisma schema, tests
+- frontend/ : React app, pages, components, face model files in public/models
+- .env.example : environment variable names with empty values
 
-```bash
-# Backend dependencies
-cd backend
-npm install
-npx prisma db push
+## Run locally
 
-# Frontend dependencies
-cd ../frontend
-npm install
-```
+1. Backend
+   - Open a terminal in the backend folder.
+   - Copy .env.example to .env and fill in JWT_SECRET. Add AI_API_KEY if you have one.
+   - Run: npm install
+   - Run: npx prisma db push --schema=prisma/schema.prisma
+   - Run: npm run dev (the API runs on port 5000)
+2. Frontend
+   - Open a second terminal in the frontend folder.
+   - Run: npm install
+   - Run: npm run dev (open the port Vite prints, usually 5173)
+3. Open the app in your browser. The app starts empty and shows the first-run setup screen.
 
-### 2. Configure Environment
+## First Admin
 
-Copy `.env.example` in `backend/.env`:
-```bash
-cp .env.example .env
-```
-Edit `backend/.env` with your values (no hardcoded credentials required):
-```env
-PORT=5000
-DATABASE_URL="file:./dev.db"
-JWT_SECRET="your_secure_jwt_secret_key"
-JWT_EXPIRES_IN="7d"
-AI_API_KEY=""
-```
+On first run, the setup screen asks for the company name, the Admin email, the Admin password (at least 8 characters), and office hours. Leave the office latitude, longitude, and radius blank if you do not want the geofence check yet.
 
-### 3. Start Application
+The Admin then creates HR logins. HR registers employees. Each employee receives a temporary password and must change it on first sign-in.
 
-In terminal 1 (backend):
-```bash
-cd backend
-npm run dev
-```
+## Environment variables (backend/.env)
 
-In terminal 2 (frontend):
-```bash
-cd frontend
-npm run dev
-```
+- DATABASE_URL: for example file:./dev.db
+- JWT_SECRET: a long random string
+- AI_API_KEY: your hosted LLM key. Without it, the assistant uses built-in service answers.
+- PORT: optional, default 5000
 
-Open `http://localhost:5173` in your browser.
+Never commit .env. Only .env.example belongs in the repository.
 
----
+## Face and GPS check-in (Employee role)
 
-## 👤 First Admin via Setup Screen
+- Open Web Check-In and allow camera and location access.
+- Look straight at the camera with your whole face and forehead visible. Detection works best in front-facing light. It drops when the face is partly out of frame or the light is behind you.
+- The server checks GPS accuracy (100 m or better) and the office radius when Admin has set the office location. The server stamps the time. No photos are sent or stored.
+- Indoor GPS on a laptop can be slow or approximate. Use the Retry button if location times out.
+- One check-in per employee per day. A second attempt is rejected.
 
-HCM Lite starts completely empty with zero dummy data. On first launch:
-1. Navigate to `http://localhost:5173` — the app automatically redirects to the **First-Time Setup** screen (`/setup`).
-2. Enter your **Company Legal Name**, office working hours, grace period, and create the **Master Admin account** (email & password).
-3. Alternatively, setting `ADMIN_EMAIL` and `ADMIN_PASSWORD` in `backend/.env` automatically provisions the initial Admin account upon first server startup.
+## Theme
 
----
+The app supports dark mode (default) and light mode. Use the sun/moon toggle in the navigation bar. The choice is saved in the browser.
 
-## 🤖 Setting AI_API_KEY
+## Tests
 
-HCM Lite includes an AI assistant that uses hosted LLM tool-calling to query company policies, live attendance, and leave balances through the service layer.
+- Backend: run npm test inside the backend folder.
+- Frontend: run npm run build inside the frontend folder.
 
-To enable live LLM tool-calling:
-1. Obtain an API key from [Google AI Studio](https://aistudio.google.com/) (Gemini) or OpenAI.
-2. In `backend/.env`:
-   ```env
-   AI_API_KEY="your-actual-api-key"
-   AI_PROVIDER="auto"
-   AI_MODEL="gemini-1.5-flash"
-   ```
-3. Restart the backend. If `AI_API_KEY` is not provided, the assistant operates using intelligent deterministic tool-calling rules. Colleague salary queries and unprivileged cross-employee data requests are strictly rejected.
+The backend tests cover attendance status, leave days, payroll math, tax slabs, and validation.
 
----
+## Done
 
-## 📷 Face-API Model Setup
+- Three roles with server-side access checks
+- First-run setup, company settings, departments, leave types, holidays
+- Employee registration with temporary password, CSV dry run and export
+- Web check-in and check-out, attendance board, corrections
+- Leave apply, cancel, approve or reject with comment
+- Payroll draft, Admin finalize (locks the month), payslip PDF
+- Dashboards with date and department filters
+- AI assistant with tool calling, dashboard summary, smart leave prefill, policy Q&A, rate limit, and logging
+- Audit log, notifications, announcements
+- Face detection check-in with GPS accuracy and office geofence
+- Dark and light theme
 
-The frontend uses `@vladmandic/face-api` to perform client-side face verification before attendance check-in:
-1. Model files reside in `frontend/public/models/`:
-   - `tiny_face_detector_model-weights_manifest.json`
-   - `tiny_face_detector_model.bin`
-   - `face_landmark_68_model-weights_manifest.json`
-   - `face_landmark_68_model.bin`
-2. Vite serves `/public` statically at root URL `/models`.
-3. The component loads weights via `faceapi.nets.tinyFaceDetector.loadFromUri('/models')`.
-4. If models fail to load, a clear error banner is displayed and check-in remains disabled until resolved.
+## Not done
 
----
-
-## 📸 Face-Recognition & GPS Check-In (Employee Only)
-
-- **Role Protection**: Only users with the `EMPLOYEE` role can check in (server returns HTTP `403` to Admin and HR; check-in controls are hidden in the UI for non-employees).
-- **Camera Feed**: Front-facing webcam stream with real-time face detection executed every 500 ms.
-- **Single-Face Validation**: Check-in is enabled only when exactly 1 face is detected. Displays `"No face detected"` or `"More than one face detected"`.
-- **GPS Validation**: Browser queries high-accuracy geolocation (`enableHighAccuracy: true`). Coordinates and accuracy in meters are displayed.
-- **Server Enforcement**:
-  - Rejects with HTTP `422` if GPS accuracy is worse than 100 meters.
-  - If office coordinates and radius are empty, geofence check is skipped and noted.
-  - If office coordinates are configured, `geolib.isPointWithinRadius` validates proximity; rejects with HTTP `422` if outside allowed radius.
-  - Enforces 1 check-in per employee per day; second check-in returns HTTP `409 Conflict`.
-  - Server stamps authoritative check-in timestamp (client timestamps ignored). No camera images or photos are sent to or stored on the server.
-  - Audit log entry is generated for every check-in event.
-
----
-
-## 📋 What is Done
-
-1. **Role-Based Access Control**: Server and UI RBAC across Admin, HR, and Employee roles.
-2. **First-Run Setup**: Clean initial setup wizard; empty database bootstrap.
-3. **Face & GPS Check-In**: Live webcam face detection, GPS geofencing via `geolib`, 100m accuracy gate.
-4. **Attendance Management**: Office hours cutoff (`officeStartTime` + `graceMinutes`), 5.0h half-day rules, daily attendance board with real-time status updates (`ON_LEAVE (...)`, `PRESENT`, `LATE`, `HALF_DAY`, `ABSENT`), attendance correction workflows.
-5. **Leave Management**: Working-day calculator skipping configured weekends and company holidays, leave quotas, overlap detection (HTTP `422`), over-balance prevention (HTTP `422`), employee cancellation, HR approval with comments.
-6. **Payroll Calculation**: Gross formula (`1.5 x Basic`), attendance and unpaid leave deductions, mid-month proration, 5 progressive annual tax slabs, Admin month finalization locking (prevents re-generation or modification with HTTP `403`), PDF payslip generation via `pdfkit`.
-7. **Cross-Employee Data Isolation**: Employees restricted to their own profiles, payslips, and attendance (cross-employee access returns HTTP `403`).
-8. **Employee Management**: Single employee registration with temporary password generation and forced first-login password change; bulk CSV import with dry-run error reporting (`row`, `field`, `reason`).
-9. **Audit Trail**: Immutable system audit logs tracking entity creation, updates, approvals, and payroll finalizations with diffs.
-
----
-
-## ⚠️ What is Not Done
-
-1. **Physical Biometric Hardware**: Integration with proprietary hardware fingerprint or optical scanner terminals.
-2. **Multi-Currency Payroll**: Multi-currency conversion rates (all calculations use company base currency).
-3. **Automated Banking Gateway**: Direct automated bank wire API execution (finalized payroll generates exportable records and PDF payslips for disbursement).
-
----
-
-## 💡 Assumptions
-
-1. **Office Geofence Configuration**: On initial install, office coordinates (`latitude`, `longitude`, `radius`) are empty by default. Geofence verification is skipped until an Admin explicitly configures coordinates in Company Settings.
-2. **GPS Accuracy Threshold**: Mobile and desktop browser GPS accuracy must be within 100 meters to ensure valid proximity check.
-3. **Face Detection**: Evaluates live face presence (`TinyFaceDetector`) entirely in the client browser. No images are transmitted across the network, preserving user privacy.
-4. **Standard Work Week**: Default working days assume Monday through Friday with Saturday and Sunday as weekends, configurable per company.
+- Face identity matching against an enrolled face (the check confirms one face, not who it is)
+- Blink or liveness check
+- Mobile app (web only)
+- PostgreSQL setup (SQLite is used)
+- Roman Urdu support and PWA mode
+- Measured test coverage
