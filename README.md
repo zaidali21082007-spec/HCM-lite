@@ -74,6 +74,6 @@ The live frontend (https://hcm-lite-eight.vercel.app/) needs the backend API run
 
 ## Live backend
 
-https://respect-barnes-mostly-organ.trycloudflare.com
+https://hcm-lite-br94.vercel.app
 
-Health check: https://respect-barnes-mostly-organ.trycloudflare.com/health
+Health check: https://hcm-lite-br94.vercel.app/health
