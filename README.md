@@ -70,7 +70,7 @@ Never commit .env. Only .env.example belongs in the repository.
 
 ## Backend note
 
-The live frontend (https://hcm-lite-eight.vercel.app/) needs the backend API running. During judging, the backend runs locally on port 5000 and is exposed through a temporary tunnel. Run it with: cd backend && npm run dev. Login and data depend on the backend being reachable.
+The live frontend (https://hcm-lite-eight.vercel.app/) calls the live backend API at https://hcm-lite-br94.vercel.app, hosted on Vercel with a Neon Postgres database. Login and data depend on the backend being reachable.
 
 ## Live backend
 
